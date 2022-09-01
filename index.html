@@ -1,0 +1,145 @@
+<html>
+    <head>
+        <title>
+                Registration Form
+        </title>
+        <style>
+            input{
+                background-color:rgb(248, 245, 245);
+                border-radius: 10px;
+                border-color:transparent;
+                padding:10px;
+                box-shadow: 2px 2px lightgray;
+            }
+            span{
+                color:red;
+            }
+            .button
+            {
+                color:white;
+                width:100px;
+                background-color:lightgreen;
+                border-color:transparent;
+                border-radius: 5px;
+                padding:2px;
+                box-shadow: 0 5px #999;
+            }
+            .button:hover {background-color: #3e8e41}
+            input#name:invalid:focus
+            {
+                outline-color:red;
+            }
+            input#email:invalid:focus
+            {
+                outline-color:red;
+            }
+            input#password:invalid:focus
+            {
+                outline-color:red;
+            }
+            input#dob:invalid:focus
+            {
+                outline-color:red;
+            }
+            
+        </style>
+    </head>
+    <body style="background-color: lightgray;">
+        
+        <h1 style="color:black;text-align:center"><u>Registration Form</u></h1>
+        
+        <form id="user-form" style="margin: auto;width:500px;overflow: hidden">
+
+            <fieldset style="background-color:azure;border-radius: 10px;">
+            <legend><h3 style="color:black">Personal Details:</h3></legend>
+            <label for="name">Name<span >*</span></label>
+            <input required type="text" id="name" name="name" placeholder="Enter full name" >
+            <br>
+            <br>
+    
+            <label for="email">Email<span >*</span></label>
+            <input required type="email" id="email" name="email" placeholder="Enter email Id">
+            <br>
+            <br>
+            <label for="password">Password<span >*</span></label>
+            <input  type="password" id="password" name="password" placeholder="Enter password" required>
+            <br>
+            <br>
+            <label for="dob">Date of Birth<span >*</span></label>
+            <input type="date" id="dob" name="dob" required>
+            <br>
+            <br>
+            <input type="checkbox" id="acceptTerms" name="acceptTerms">
+            <label for="acceptTerms">Accept Terms & Conditions</label>
+            <br>
+            <br>
+            <button class="button"  type="submit" ><h4>Submit</h4></button>
+            <br><br>
+        </fieldset>
+           <div>
+            <h2 style="text-align:center;font-style: italic">Entries</h2>
+            <div id="user-entries"></div>
+           </div>
+        </form>
+        <script src="./index.js" defer> </script>
+        <script>
+                const email=document.getElementById("email");
+                email.addEventListener('input',() => validate(email));
+
+        
+                function validate(element){
+                    if(element.validity.typeMismatch){
+                        element.setCustomValidity("This email is not in right format");
+                        element.reportValidity();
+                    }
+                    else{
+                        element.setCustomValidity('');
+                    }
+                                 
+                }           
+             
+
+                const dob = document.getElementById("dob");
+                dob.addEventListener("change", () => validateDob(dob));
+
+                function validateDob(dob)
+                {
+                  let sepDate=dob.value.split("-");
+                    let year=sepDate[0];
+                    let month=sepDate[1];
+                    let date=sepDate[2];
+
+                    let birthdate = new Date(year, month, date);
+                    let today = new Date();
+                    let currentYear= today.getFullYear();
+                    let birthYear=birthdate.getFullYear()
+                    let age = currentYear - birthYear;
+                    let monthDiff = today.getMonth() - birthdate.getMonth();
+                    if ((today.getDate() < birthdate.getDate())||monthDiff<0) 
+                    {
+                      age=age-1;
+                    }
+                  
+                    if (age < 18 || age > 55) 
+                    {
+                      dob.setCustomValidity("Sorry!!!Age is not between 18 and 55 years");
+                      dob.reportValidity();
+                    }
+                     else
+                    {
+                      dob.setCustomValidity("");
+                    }
+                  }  
+                
+                  /*function myFunction() {
+                 document.getElementById("user-form").reset();
+}*/
+                                 
+                           
+              
+                
+                
+        </script>
+       
+    </body>
+</html>
